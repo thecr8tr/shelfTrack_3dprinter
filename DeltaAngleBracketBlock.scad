@@ -1,22 +1,7 @@
 // Gen1_delta clamp
-//////NEED TO CHECK TRIG IN THIS DOCUMENT
 
 include <BaseTrackBlock.scad>
 
-module angled_plate()
-{
-    difference()
-    {
-        union()
-        {
-            translate([0,-block_z+minimum_material_thickness,block_z/sqrt(3)]) cube([block_x,block_z,minimum_material_thickness]);
-            translate([block_x,minimum_material_thickness,5]) rotate([90,270,0]) base_track_block();
-            cube([block_x,minimum_material_thickness,block_z/sqrt(3)]);
-        }
-            translate([block_x/4-block_z/4,-block_z,0]) cube([block_z/sqrt(3),block_z/sqrt(3),block_z/sqrt(3)]);
-            translate([block_x/4*3-block_z/4,-block_z,0]) cube([block_z/sqrt(3),block_z/sqrt(3),block_z/sqrt(3)]);
-    }
-}
 
 module cross_brace()
 {
@@ -28,60 +13,46 @@ module cross_brace()
         }
         union()
         {
-            translate([0,block_x/2-Nema_17_Motor_Length/2,block_x/2+Nema_17_Motor_Length/2]) rotate([0,90,0]) Nema_17_Motor_Hole_Layout();
-        }
-    }
-}
-
-module base_block_side_nut_slot()
-{
-    difference()
-    {
-        union()
-        {
-            base_track_block();
-            cube([block_x,block_y,4]);
-        }
-        union()
-        {
-            translate([block_x/4-m5_nut_diameter/2,-.02,minimum_material_thickness]) cube([8, 10, m5_nut_height]);
-            translate([block_x/4*3-m5_nut_diameter/2,-.02,minimum_material_thickness]) cube([8, 10, m5_nut_height]);
-            translate([block_x/4-m5_nut_diameter/2,block_x-9.98,minimum_material_thickness]) cube([8, 10, m5_nut_height]);
-            translate([block_x/4*3-m5_nut_diameter/2,block_x-9.98,minimum_material_thickness]) cube([8, 10, m5_nut_height]);
-            translate([block_x/4,(block_y-track_channel_y)/4,minimum_material_thickness]) m5_nut_cavity();
-            translate([block_x/4*3,(block_y-track_channel_y)/4,minimum_material_thickness]) m5_nut_cavity();
-            translate([block_x/4,block_y-(block_y-track_channel_y)/4,minimum_material_thickness]) m5_nut_cavity();
-            translate([block_x/4*3,block_y-(block_y-track_channel_y)/4,minimum_material_thickness]) m5_nut_cavity();
+            translate([0, block_x/2-Nema_17_Motor_Length/2 ,block_x/2+Nema_17_Motor_Length/2]) rotate([0,90,0]) Nema_17_Motor_Hole_Layout();
         }
     }
 }
 
 module delta_legs()
 {
-    difference()
-    {
-        union()
-        {
-            translate([0, block_x/3*2+minimum_material_thickness/2*sqrt(3) ,minimum_material_thickness/2]) rotate([-150,0,0]) angled_plate();
-            //translate([0,block_x/3*2,0]) rotate([-150,0,0]) angled_plate();
-            translate([block_x, block_x/3-minimum_material_thickness/2*sqrt(3), minimum_material_thickness/2]) rotate([-150,0,180]) angled_plate();
-            //translate([block_x, block_x/3, minimum_material_thickness/2]) rotate([-150,0,180]) angled_plate();
-        }
-    }
+    translate([block_x,0,0]) rotate([300, 0, 0]) rotate([0,0,90]) base_side_track_block();
+    rotate([300, 0, 180]) rotate([0,0,90]) base_side_track_block();
 }
 
 module delta_legs_plus_cross_brace()
 {
+    hexagon_radial=(block_z+block_screw_base_thickness-minimum_material_thickness);
     difference()
     {
         union()
         {
-            translate([0,0,(minimum_material_thickness/2)*sqrt(3)]) delta_legs();
-            translate([0,0,-block_x/2+(minimum_material_thickness/2)*sqrt(3)]) rotate([0,90,0]) cross_brace();
+            translate([0,0,hexagon_radial-(block_z-block_screw_base_thickness+minimum_material_thickness)/sqrt(3)-.5]) rotate([0,90,0]) cylinder(d=2*hexagon_radial, h=block_x, $fn=6);
+            translate([0,0,-block_screw_base_thickness/2*sqrt(3)]) delta_legs();
+            translate([0,-block_x/2,-sqrt(3)*block_x/2+minimum_material_thickness-block_screw_base_thickness/2*sqrt(3)]) rotate([0,90,0]) cross_brace();
         }
         union()
         {
-            translate([0,0,0]) cube(block_x,block_x,block_x);
+            difference()
+            {
+                translate([-.1,-block_x,0]) cube([2*block_x, 2*block_x, 2*block_x]);
+                difference()
+                {
+                    translate([0,(hexagon_radial*2)/sqrt(3)-(block_x/2),0]) cube([block_x,block_x,block_z]);
+//#################TODO FIX TRANSLATION for AUTO
+                    translate([0-.1,61.665,0]) rotate([120,0,0]) cube([block_x+.2,block_x+.2,block_z]);
+                }
+                difference()
+                {
+                    translate([0,(-hexagon_radial*2)/sqrt(3)+(block_x/2)-block_x,0]) rotate([0,0,0]) cube([block_x,block_x,block_z]);
+//#################TODO FIX TRANSLATION for AUTO
+                    translate([0-.1,-32.45,0]) rotate([60,0,0]) cube([block_x+.2,block_x+.2,block_z]);
+                }
+            }
         }
     }
 }
@@ -90,9 +61,9 @@ module delta_angle_bracket_block()
 {
     union()
     {
-        base_block_side_nut_slot();
-        translate([0,0,0]) delta_legs_plus_cross_brace();
+        translate([0,-block_y/2,0]) base_vert_track_block();
+        delta_legs_plus_cross_brace();
     }
 }
 
-delta_angle_bracket_block();
+//delta_angle_bracket_block();
