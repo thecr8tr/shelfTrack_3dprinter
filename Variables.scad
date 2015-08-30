@@ -54,8 +54,8 @@ module 5mm_screw_bevel()
 
 //###########################################
 //Shelf Track
-shelf_track_width=25.5;
-shelf_track_depth=14;
+shelf_track_width=24.3;
+shelf_track_depth=17.3;
 shelf_track_material_thickness=1.5;
 
 //###########################################
@@ -111,7 +111,7 @@ hot_end_beyond_plate_diameter=16;
 //Effector
 
 //Track Block Basics
-block_screw_base_thickness=20;
+block_screw_base_thickness=25;
 block_x=shelf_track_width+block_screw_base_thickness*2;
 block_y=block_x;
 block_z=shelf_track_depth+minimum_material_thickness;

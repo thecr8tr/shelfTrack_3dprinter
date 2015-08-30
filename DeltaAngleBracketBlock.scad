@@ -62,8 +62,10 @@ module delta_legs()
     {
         union()
         {
-            translate([0,block_x/3*2,0]) rotate([-150,0,0]) angled_plate();
-            translate([block_x,block_x/3,0]) rotate([-150,0,180]) angled_plate();
+            translate([0, block_x/3*2+minimum_material_thickness/2*sqrt(3) ,minimum_material_thickness/2]) rotate([-150,0,0]) angled_plate();
+            //translate([0,block_x/3*2,0]) rotate([-150,0,0]) angled_plate();
+            translate([block_x, block_x/3-minimum_material_thickness/2*sqrt(3), minimum_material_thickness/2]) rotate([-150,0,180]) angled_plate();
+            //translate([block_x, block_x/3, minimum_material_thickness/2]) rotate([-150,0,180]) angled_plate();
         }
     }
 }
@@ -74,12 +76,11 @@ module delta_legs_plus_cross_brace()
     {
         union()
         {
-            translate([0,0,0]) delta_legs();
-            translate([0,0,-block_x/1.7]) rotate([0,90,0]) cross_brace();
+            translate([0,0,(minimum_material_thickness/2)*sqrt(3)]) delta_legs();
+            translate([0,0,-block_x/2+(minimum_material_thickness/2)*sqrt(3)]) rotate([0,90,0]) cross_brace();
         }
         union()
         {
-            /////NEED SOME CRAZY TRIG BS HERE on Z
             translate([0,0,0]) cube(block_x,block_x,block_x);
         }
     }
@@ -90,7 +91,7 @@ module delta_angle_bracket_block()
     union()
     {
         base_block_side_nut_slot();
-        !translate([0,0,4.5]) delta_legs_plus_cross_brace();
+        !translate([0,0,0]) delta_legs_plus_cross_brace();
     }
 }
 
