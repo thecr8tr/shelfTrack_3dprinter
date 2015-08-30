@@ -37,7 +37,7 @@ m5_head_rise=2.5;
 
 //M5 5mm Nuts
 m5_nut_height=4;
-    //Distance flat to flat == 8mm
+m5_nut_flat_to_flat=8;
 m5_nut_diameter=9.3;
 module m5_nut_cavity()
 {
@@ -111,8 +111,8 @@ hot_end_beyond_plate_diameter=16;
 //Effector
 
 //Track Block Basics
-block_screw_base_thickness=25;
-block_x=shelf_track_width+block_screw_base_thickness*2;
-block_y=block_x;
-block_z=shelf_track_depth+minimum_material_thickness;
+block_screw_base_thickness=minimum_material_thickness*2+m5_nut_height;
+block_y=shelf_track_width+minimum_material_thickness*2;
+block_x=block_y*1.5;
+block_z=shelf_track_depth+minimum_material_thickness*2;
 
