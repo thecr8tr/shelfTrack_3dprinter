@@ -1,14 +1,10 @@
 // 
 
 include <BaseTrackBlock.scad>
+include <Variables.scad>
+
 //number of facets
 $fn=40;
-
-
-module track_tab()
-{
-    cube([18,2.7,5],center=true);
-}
 
 module ball_joint_mount()
 {
@@ -16,16 +12,26 @@ module ball_joint_mount()
     {
         union()
         {
-            cylinder(r1=14, r2=2.5, h=10);
+            cylinder(r1=block_z*1.5, r2=ball_joint_dowel+2, h=ball_joint_dowel*4);
         }
         union()
         {
-            translate([-15,6.5,-1]) cube([28,28,28]);
-            translate([-15,-34.5,-1]) cube([28,28,28]);
-            translate([9,-10,-1]) cube([28,28,28]);
+            translate([-64.75,-block_z/2-.1,-.1]) cube([block_z*3,block_z*3,block_z*3]);
+            translate([20.75,-block_z/2-.1,-.1]) cube([block_z*3,block_z*3,block_z*3]);
+            translate([-block_z*1.5,-block_z*3.5,-.1]) cube([block_z*3,block_z*3,block_z*3]);
+            translate([-block_z*1.5,block_z/2,-.1]) cube([block_z*3,block_z*3,block_z*3]);
         }
     }
 }
 
-rotate([90,0,0]) translate ([6,0,30]) ball_joint_mount();
-rotate([270,0,0]) translate ([6,0,30]) ball_joint_mount();
+module ball_joint_adapt_block()
+{
+    union()
+    {
+        base_track_block();
+        rotate([90,0,0]) translate ([block_z/2+1.75,block_z/2,0]) ball_joint_mount();
+        rotate([270,0,0]) translate ([block_z/2+1.75,-block_z/2,block_x]) ball_joint_mount();
+    }
+}
+
+//ball_joint_adapt_block();

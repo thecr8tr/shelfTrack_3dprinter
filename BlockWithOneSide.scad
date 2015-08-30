@@ -11,15 +11,24 @@ module side_plate()
     {
         union()
         {
-            translate([0,-28,-7]) cube([30,4,15],center=true);
+            cube([block_x,4,block_z*.75]);
         }
         union()
         {
-            translate([7.5,-28,-8])rotate([90,0,0]) cylinder(d=5, h=60, center=true);
-            translate([-7.5,-28,-8])rotate([90,0,0]) cylinder(d=5, h=60, center=true);
-            translate([0,-28,-3])rotate([90,0,0]) cylinder(d=5, h=60, center=true);
+            translate([block_x/4,5,block_z*.75/3*2])rotate([90,0,0]) 5mm_screw_way();
+            translate([block_x/4*3,5,block_z*.75/3*2])rotate([90,0,0]) 5mm_screw_way();
+            translate([block_x/4*2,5,block_z*.75/3])rotate([90,0,0]) 5mm_screw_way();
         }
     }
 }
 
-translate([0,0,-7]) side_plate();
+module block_with_one_side()
+{
+    union()
+    {
+        base_track_block();
+        translate([0,0,-block_z*.75]) side_plate();
+    }
+}
+
+//block_with_one_side();

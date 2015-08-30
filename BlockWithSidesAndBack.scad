@@ -8,5 +8,5 @@ $fn=40;
 
 //2mm into back and level with top of back
 //blocks for  sides
-translate([8,28.65,-12.5]) cube([18,2.7,18],center=true);
-translate([8,-28.65,-12.5]) cube([14,2.7,18],center=true);
+translate([0,57.3,-14]) cube([18,2.7,18]);
+translate([0,0,-14]) cube([14,2.7,18]);

@@ -2,6 +2,9 @@
 
 include <DeltaAngleBracketBlock.scad>
 include <TrackPieces.scad>
+include <BallJointAdaptBlock.scad>
+
+printer_carriage_height=300;
 
 module corner_side_and_base()
 {
@@ -33,4 +36,12 @@ module stand()
     }
 }
 
+module printer_carriages()
+{
+    color("Green") translate([0,0,printer_carriage_height]) rotate([0,270,0]) ball_joint_adapt_block();
+    color("Green") translate([258.25,209.5,printer_carriage_height]) rotate([0,270,240]) ball_joint_adapt_block();
+    color("Green") translate([310.6,-119,printer_carriage_height]) rotate([0,270,120]) ball_joint_adapt_block();
+}
+
 stand();
+printer_carriages();
