@@ -33,7 +33,7 @@ module shelf_track_channel_cutout()
     }
 }
 
-module set_screw_block()
+module vert_set_screw_block()
 {
     difference()
     {
@@ -56,20 +56,19 @@ module set_screw_block()
             // Nut Ways
                 translate([block_x/4-m5_nut_flat_to_flat/2,block_y/5*3,block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_y/2,m5_nut_height]);
                 translate([block_x/4*2-m5_nut_flat_to_flat/2,-block_y/5/2, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_y/2,m5_nut_height]);
-            echo(block_y);
                 translate([block_x/4*3-m5_nut_flat_to_flat/2,block_y/5*3, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_y/2,m5_nut_height]);
         }
     }
 }
 
-module base_track_block()
+module base_vert_track_block()
 {
     difference()
     {
         union()
         {
             cube ([block_x,block_y,block_z-minimum_material_thickness]);
-            translate([0,0,block_z-minimum_material_thickness]) set_screw_block();
+            translate([0,0,block_z-minimum_material_thickness]) vert_set_screw_block();
         }
         union()
         {
@@ -80,4 +79,52 @@ module base_track_block()
     
 }
 
-//base_track_block();
+module side_set_screw_block()
+{
+    difference()
+    {
+        union()
+        {
+            cube([block_x, block_x, block_screw_base_thickness]);
+        }
+        union()
+        {
+            // Screw holes
+                translate([block_x/4,block_x/5*3,-.1]) 5mm_screw_way();
+                translate([block_x/4*2,block_x/5*2,-.1]) 5mm_screw_way();
+                translate([block_x/4*3,block_x/5*3,-.1]) 5mm_screw_way();
+
+            // Nut Cavities
+                translate([block_x/4,block_x/5*3,block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
+                translate([block_x/4*2,block_x/5*2, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
+                translate([block_x/4*3,block_x/5*3, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
+
+            // Nut Ways
+                translate([block_x/4-m5_nut_flat_to_flat/2,block_x/5*3,block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
+                translate([block_x/4*2-m5_nut_flat_to_flat/2,-block_x/5/2, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
+                translate([block_x/4*3-m5_nut_flat_to_flat/2,block_x/5*3, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
+        }
+    }
+}
+
+module base_side_track_block()
+{
+    difference()
+    {
+        union()
+        {
+            cube ([block_x,block_x,block_z-minimum_material_thickness]);
+            translate([0,0,block_z-minimum_material_thickness]) side_set_screw_block();
+        }
+        union()
+        {
+        // Cut out for the channel
+            translate([-0.1,block_x/2-track_channel_y/2,minimum_material_thickness]) shelf_track_channel_cutout();
+        }
+    }
+    
+}
+
+
+//base_vert_track_block();
+//base_side_track_block();
