@@ -91,8 +91,8 @@ module delta_angle_bracket_block()
     union()
     {
         base_block_side_nut_slot();
-        !translate([0,0,0]) delta_legs_plus_cross_brace();
+        translate([0,0,0]) delta_legs_plus_cross_brace();
     }
 }
 
-delta_angle_bracket_block();
+//delta_angle_bracket_block();
