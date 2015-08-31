@@ -8,6 +8,14 @@ $fn=40;
 
 minimum_material_thickness=4;
 
+//Print Area and Base Calcs
+print_diameter=304.8; //12 inches
+print_area_buffer=25.4; //1 inch
+print_surface_diameter=print_diameter+print_area_buffer*2;
+base_rail_length=print_surface_diameter*sqrt(3);
+base_triangle_height=base_rail_length/2*sqrt(3);
+side_rail_hieght=1000;
+
 //M3 3mm Screws
 m3_shaft=3;
 m3_head_diameter=5.6;
@@ -109,6 +117,7 @@ hot_end_beyond_plate_thickness=4;
 hot_end_beyond_plate_diameter=16;
 
 //Effector
+effector_distance_between_ball_joint_faces=40;
 
 //Track Block Basics
 block_screw_base_thickness=minimum_material_thickness*2+m5_nut_height;

@@ -113,8 +113,8 @@ module base_side_track_block()
     {
         union()
         {
-            cube ([block_x,block_x,block_z-minimum_material_thickness]);
-            translate([0,0,block_z-minimum_material_thickness]) side_set_screw_block();
+            color("Blue") cube ([block_x,block_x,block_z-minimum_material_thickness]);
+            color("Blue") translate([0,0,block_z-minimum_material_thickness]) side_set_screw_block();
         }
         union()
         {

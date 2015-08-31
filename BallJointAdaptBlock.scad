@@ -1,37 +1,32 @@
 // 
 
 include <BaseTrackBlock.scad>
-include <Variables.scad>
 
 //number of facets
 $fn=40;
 
-module ball_joint_mount()
+module filament_ties()
+{
+    cylinder(d=5, h=5);
+    translate([0,0,5]) cylinder(d=8, h=5);
+}
+
+module carriage()
 {
     difference()
     {
         union()
         {
-            cylinder(r1=block_z*1.5, r2=ball_joint_dowel+2, h=ball_joint_dowel*4);
+            translate([0,0,minimum_material_thickness]) cube([block_x, effector_distance_between_ball_joint_faces, block_z]);
+            cube([block_x, effector_distance_between_ball_joint_faces, minimum_material_thickness]);
+            translate([block_x/4,effector_distance_between_ball_joint_faces/3,0]) rotate([0,180,0]) filament_ties();
+            translate([block_x/4*3,effector_distance_between_ball_joint_faces/3,0]) rotate([0,180,0]) filament_ties();
         }
         union()
         {
-            translate([-64.75,-block_z/2-.1,-.1]) cube([block_z*3,block_z*3,block_z*3]);
-            translate([20.75,-block_z/2-.1,-.1]) cube([block_z*3,block_z*3,block_z*3]);
-            translate([-block_z*1.5,-block_z*3.5,-.1]) cube([block_z*3,block_z*3,block_z*3]);
-            translate([-block_z*1.5,block_z/2,-.1]) cube([block_z*3,block_z*3,block_z*3]);
+            translate([-.1,effector_distance_between_ball_joint_faces/2-track_channel_y/2,minimum_material_thickness*2]) shelf_track_channel_cutout();
         }
     }
 }
 
-module ball_joint_adapt_block()
-{
-    union()
-    {
-        base_track_block();
-        rotate([90,0,0]) translate ([block_z/2+1.75,block_z/2,0]) ball_joint_mount();
-        rotate([270,0,0]) translate ([block_z/2+1.75,-block_z/2,block_x]) ball_joint_mount();
-    }
-}
-
-//ball_joint_adapt_block();
+//carriage();
