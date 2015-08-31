@@ -3,7 +3,7 @@
 include <Variables.scad>
 
 track_for_base_length=base_rail_length;
-track_for_side_length=side_rail_hieght;
+track_for_side_length=side_rail_height;
 
 module track_for_base()
 {

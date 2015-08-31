@@ -14,7 +14,7 @@ print_area_buffer=25.4; //1 inch
 print_surface_diameter=print_diameter+print_area_buffer*2;
 base_rail_length=print_surface_diameter*sqrt(3);
 base_triangle_height=base_rail_length/2*sqrt(3);
-side_rail_hieght=1000;
+side_rail_height=1000;
 
 //M3 3mm Screws
 m3_shaft=3;

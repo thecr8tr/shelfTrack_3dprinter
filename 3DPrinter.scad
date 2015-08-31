@@ -30,7 +30,8 @@ module stand()
     union()
     {
         2X_corner_side_and_base();
-        translate([base_triangle_height,-base_rail_length/2,13]) rotate([0,0,120]) 2X_corner_side_and_base();
+        rotate([0,0,120]) 2X_corner_side_and_base();
+        //translate([base_triangle_height,-base_rail_length/2,13]) rotate([0,0,120]) 2X_corner_side_and_base();
         //rotate([0,0,240]) translate([0,0,0]) 2X_corner_side_and_base();
     }
 }
