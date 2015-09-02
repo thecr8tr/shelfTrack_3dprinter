@@ -18,13 +18,31 @@ side_rail_height=1000;
 
 //M3 3mm Screws
 m3_shaft=3;
-m3_head_diameter=5.6;
-m3_head_rise=1.65;
+m3_slotted_flat_head_diameter=5.6;
+m3_slotted_flat_head_rise=1.65;
+m3_phillips_raised_cheese_head_diameter=6;
+m3_phillips_raised_cheese_head_rise=2.4;
 
 //M3 3mm Nuts
 m3_nut_height=2.4;
     //Distance flat to flat == 5.5mm
 m3_nut_diameter=6.45;
+module m3_philips_raised_cheese_head()
+{
+    difference()
+    {
+        cylinder(d=m3_phillips_raised_cheese_head_diameter, h=m3_phillips_raised_cheese_head_rise);
+        union()
+        {
+            difference()
+            {
+                cylinder(d=m3_phillips_raised_cheese_head_diameter+.1, h=m3_phillips_raised_cheese_head_rise+.1);
+                translate([0,0,-m3_phillips_raised_cheese_head_diameter/2*1.05]) sphere(d=2*m3_phillips_raised_cheese_head_diameter);
+            }
+        }
+    }
+}
+
 module m3_nut_cavity()
 {
     union()
@@ -125,3 +143,8 @@ block_y=shelf_track_width+minimum_material_thickness*2;
 block_x=block_y*1.5;
 block_z=shelf_track_depth+minimum_material_thickness*2;
 
+//Traxxas Rods
+traxxas_rod_length=304.8; //12 inches
+traxxas_rod_diameter=5.842; //.23 inches
+trazzas_rod_end_length=22.225; //7/8 inch
+trazzas_rod_end_hole_diameter=9;

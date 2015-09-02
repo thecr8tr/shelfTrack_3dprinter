@@ -1,4 +1,4 @@
-include <configuration.scad>;
+include <Variables.scad>;
 
 separation = 40;  // Distance between ball joint mounting faces.
 offset = 20;  // Same as DELTA_EFFECTOR_OFFSET in Marlin.
@@ -26,9 +26,9 @@ module effector() {
 		cylinder(r1=cone_r2, r2=cone_r1, h=14, center=true, $fn=24);
 	    }
 	    rotate([0, 90, 0])
-	      cylinder(r=m3_radius, h=separation+1, center=true, $fn=12);
+	      cylinder(r=m3_shaft/2, h=separation+1, center=true, $fn=12);
 	    rotate([90, 0, 90])
-	      cylinder(r=m3_nut_radius, h=separation-24, center=true, $fn=6);
+	      cylinder(r=m3_nut_diameter/2, h=separation-24, center=true, $fn=6);
 	  }
         }
       }
@@ -43,4 +43,4 @@ module effector() {
   }
 }
 
-translate([0, 0, height/2]) effector();
+//translate([0, 0, height/2]) effector();
