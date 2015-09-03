@@ -27,8 +27,8 @@ module shelf_track_channel_cutout()
         }
         union()
         {
-            translate([0,shelf_track_material_thickness,0]) track_tab();
-            translate([0,track_channel_y-shelf_track_material_thickness-minimum_material_thickness,0])track_tab();
+            //translate([0,shelf_track_material_thickness,0]) track_tab();
+            //translate([0,track_channel_y-shelf_track_material_thickness-minimum_material_thickness,0])track_tab();
         }
     }
 }
@@ -81,30 +81,20 @@ module base_vert_track_block()
 
 module side_set_screw_block()
 {
-    difference()
-    {
-        union()
-        {
-            cube([block_x, block_x, block_screw_base_thickness]);
-        }
-        union()
-        {
-            // Screw holes
-                translate([block_x/4,block_x/5*3,-.1]) 5mm_screw_way();
-                translate([block_x/4*2,block_x/5*2,-.1]) 5mm_screw_way();
-                translate([block_x/4*3,block_x/5*3,-.1]) 5mm_screw_way();
+    cube([block_x, block_x, minimum_material_thickness]);
+}
 
-            // Nut Cavities
-                translate([block_x/4,block_x/5*3,block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
-                translate([block_x/4*2,block_x/5*2, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
-                translate([block_x/4*3,block_x/5*3, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,30]) m5_nut_cavity();
+module dovetail()
+{
+    cylinder(d=12, h=minimum_material_thickness/2+.1, $fn=3);
+}
 
-            // Nut Ways
-                translate([block_x/4-m5_nut_flat_to_flat/2,block_x/5*3,block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
-                translate([block_x/4*2-m5_nut_flat_to_flat/2,-block_x/5/2, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
-                translate([block_x/4*3-m5_nut_flat_to_flat/2,block_x/5*3, block_screw_base_thickness/2-m5_nut_height/2]) rotate([0,0,0]) cube([m5_nut_flat_to_flat,block_x/2,m5_nut_height]);
-        }
-    }
+module dovetails()
+{
+    rotate([0,0,30]) dovetail();
+    translate([15,0,0]) rotate([0,0,30]) dovetail();
+    translate([30,0,0]) rotate([0,0,30]) dovetail();
+    translate([45,0,0]) rotate([0,0,30]) dovetail();
 }
 
 module base_side_track_block()
@@ -120,11 +110,36 @@ module base_side_track_block()
         {
         // Cut out for the channel
             translate([-0.1,block_x/2-track_channel_y/2,minimum_material_thickness]) shelf_track_channel_cutout();
-        }
+            translate([-.1,-.1,minimum_material_thickness]) cube([block_x+.2,(block_x-shelf_track_width)/2+.2,block_z-2*minimum_material_thickness]);
+        // Screw holes
+            translate([block_x/4,block_x/5*2.5,-.1]) 5mm_screw_way();
+            translate([block_x/4*2,block_x/5*2.5,-.1]) 5mm_screw_way();
+            translate([block_x/4*3,block_x/5*2.5,-.1]) 5mm_screw_way();
+            translate([0,0,minimum_material_thickness/2]) dovetails();
+            translate([0,0,block_z-minimum_material_thickness-.1]) dovetails();
+          }
     }
-    
 }
 
+module base_side_track_block_side()
+{
+    difference()
+    {
+        union()
+        {
+            cube([block_x,(block_x-shelf_track_width)/2,block_z-minimum_material_thickness*2]);
+            translate([0,0,block_z-minimum_material_thickness*2]) dovetails();
+            translate([0,0,-minimum_material_thickness/2+.1]) dovetails();
+        }
+        union()
+        {
+                translate([-minimum_material_thickness,-(block_x-shelf_track_width)/2,-minimum_material_thickness]) cube([block_x+minimum_material_thickness,(block_x-shelf_track_width)/2,block_z]);
+            translate([block_x,0,-minimum_material_thickness]) cube([block_x,(block_x-shelf_track_width)/2,block_z]);
+            translate([-block_x,-.1,-minimum_material_thickness]) cube([block_x,(block_x-shelf_track_width)/2,block_z]);
+        }
+    }
+}
 
 //base_vert_track_block();
 //base_side_track_block();
+//translate([0,-20,minimum_material_thickness]) base_side_track_block_side();

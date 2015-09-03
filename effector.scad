@@ -1,4 +1,4 @@
-include <Variables.scad>;
+include <Variables.scad>
 
 separation = 40;  // Distance between ball joint mounting faces.
 offset = 20;  // Same as DELTA_EFFECTOR_OFFSET in Marlin.

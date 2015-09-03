@@ -21,12 +21,12 @@ module cross_brace()
 module delta_legs()
 {
     translate([block_x,0,0]) rotate([300, 0, 0]) rotate([0,0,90]) base_side_track_block();
-    rotate([300, 0, 180]) rotate([0,0,90]) base_side_track_block();
+    translate([block_x,-block_z+1.5,-block_x+6.5]) rotate([60, 0, 0]) rotate([0,0,90]) base_side_track_block();
 }
 
 module delta_legs_plus_cross_brace()
 {
-    hexagon_radial=(block_z+block_screw_base_thickness-minimum_material_thickness);
+    hexagon_radial=(block_z);
     difference()
     {
         union()
@@ -39,6 +39,7 @@ module delta_legs_plus_cross_brace()
         {
             difference()
             {
+
                 translate([-.1,-block_x,0]) cube([2*block_x, 2*block_x, 2*block_x]);
                 difference()
                 {
@@ -59,10 +60,17 @@ module delta_legs_plus_cross_brace()
 
 module delta_angle_bracket_block()
 {
-    union()
+    difference()
     {
-        translate([0,-block_y/2,0]) base_vert_track_block();
-        delta_legs_plus_cross_brace();
+        union()
+        {
+            translate([0,-block_y/2,0]) base_vert_track_block();
+            delta_legs_plus_cross_brace();
+        }
+        union()
+        {
+            translate([-.1,-track_channel_y/2,minimum_material_thickness]) cube([track_channel_x+.2,track_channel_y,track_channel_z]);
+        }
     }
 }
 
